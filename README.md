@@ -8,6 +8,24 @@ Request
 "lcobucci/jwt": "^3.3"
 ```
 
+Install
+------------
+
+The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
+
+Either run
+
+```
+composer require lengbin/jwt
+```
+
+or add
+
+```
+"lengbin/jwt": "*"
+```
+to the require section of your `composer.json` file.
+
 Usage
 -----
 ```php
