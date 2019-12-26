@@ -150,7 +150,12 @@ class Jwt extends ObjectHelper implements OauthInterface
         $this->_builder = null;
         $this->_token = null;
         $this->configure($this, $config);
-        $this->blacklist = new Blacklist(new $this->cache);
+        if (function_exists('make')) {
+            $cache = make($this->cache);
+        } else {
+            $cache = new $this->cache;
+        }
+        $this->blacklist = new Blacklist($cache);
     }
 
     /**
