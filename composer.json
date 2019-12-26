@@ -1,0 +1,30 @@
+{
+  "name": "lengbin/jwt",
+  "description": "jwt",
+  "type": "library",
+  "keywords": ["php", "jwt","extension"],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2.0",
+    "lcobucci/jwt": "3.3",
+    "psr/simple-cache": "^1.0",
+    "lengbin/hyperf-helper": "dev-master"
+  },
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Lengbin\\Jwt\\": "src"
+    }
+  },
+  "authors": [
+    {
+      "name": "lengbin",
+      "email": "xykxyk2008@163.com"
+    }
+  ],
+  "extra": {
+    "hyperf": {
+      "config": "Lengbin\\Hyperf\\Swagger\\ConfigProvider"
+    }
+  }
+}
