@@ -9,12 +9,12 @@ interface OauthInterface
     /**
      * 生成token
      *
-     * @param array $claims
-     * @param bool  $isSso
+     * @param array           $claims
+     * @param int|string|null $jti
      *
      * @return string
      */
-    public function makeToken(array $claims = [], $isSso = true);
+    public function makeToken(array $claims = [], $jti = null);
 
     /**
      * 验证
@@ -24,6 +24,12 @@ interface OauthInterface
      * @return bool
      */
     public function verify(string $token);
+
+    /**
+     * 自定义参数 转为数组
+     * @return array
+     */
+    public function claimsAsArray();
 
     /**
      * 生成 刷新token
