@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace Lengbin\Jwt;
 
-interface OauthInterface
+interface TokenInterface
 {
 
     /**
      * 生成token
      *
-     * @param array           $claims
+     * @param array           $params
      * @param int|string|null $jti
      *
      * @return string
      */
-    public function makeToken(array $claims = [], $jti = null);
+    public function makeToken(array $params = [], $jti = null);
 
     /**
      * 验证
@@ -26,10 +26,10 @@ interface OauthInterface
     public function verify(string $token);
 
     /**
-     * 自定义参数 转为数组
+     * 获得 自定义参数
      * @return array
      */
-    public function claimsAsArray();
+    public function getParams();
 
     /**
      * 生成 刷新token

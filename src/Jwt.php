@@ -35,13 +35,13 @@ use Psr\SimpleCache\CacheInterface;
  *   $token = '';
  *   $jwt->verify($token);
  *   // get params
- *   $jwt->claimsAsArray();
+ *   $jwt->getParams();
  *
  *   // refreshToken
  *   $jwt->refreshToken($refreshToken);
  *
  */
-class Jwt extends ObjectHelper implements OauthInterface
+class Jwt extends ObjectHelper implements TokenInterface
 {
     /**
      * builder
@@ -238,14 +238,14 @@ class Jwt extends ObjectHelper implements OauthInterface
     /**
      * 生成token
      *
-     * @param array $claims 自定义信息
+     * @param array $params 自定义信息
      * @param mixed $jti    uid
      *
      * @return string
      * @throws \Exception
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function makeToken(array $claims = [], $jti = null): string
+    public function makeToken(array $params = [], $jti = null): string
     {
         $builder = $this->getBuilder();
 
@@ -275,7 +275,7 @@ class Jwt extends ObjectHelper implements OauthInterface
         $token = $builder->getToken($signer, $privateKey);
 
         $this->_token = $token;
-        $this->blacklist->add($this->claimsAsArray());
+        $this->blacklist->add($this->getParams());
 
         return $token->__toString();
     }
@@ -284,7 +284,7 @@ class Jwt extends ObjectHelper implements OauthInterface
      * 自定义参数 转为数组
      * @return array
      */
-    public function claimsAsArray()
+    public function getParams()
     {
         $data = [];
         if ($this->_token === null) {
@@ -324,7 +324,7 @@ class Jwt extends ObjectHelper implements OauthInterface
 
         $this->_token = $token;
 
-        if ($token !== null && $this->blacklist->has($token->getClaim('jti', ''), $this->claimsAsArray())) {
+        if ($token !== null && $this->blacklist->has($token->getClaim('jti', ''), $this->getParams())) {
             $token = null;
             $this->_token = $token;
         }
@@ -418,7 +418,7 @@ class Jwt extends ObjectHelper implements OauthInterface
     public function makeRefreshToken($exp = 604800)
     {
         $jti = $this->generateRefreshToken();
-        $claims = $this->claimsAsArray();
+        $claims = $this->getParams();
         $unsetLists = [
             'iat',
             'nbf',

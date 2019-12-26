@@ -63,7 +63,7 @@ Usage
     $token = '';
     $jwt->verify($token);
      // get params
-    $jwt->claimsAsArray();
+    $jwt->getParams();
 
      // refreshToken
     $jwt->refreshToken($refreshToken);
@@ -72,8 +72,8 @@ Usage
 
     // 方法二  依赖注入
     //自己去实现
-    // OauthInterface => TokenFactory
-    // TokenFactory 实现方法一
+    // TokenInterface => TokenFactory
+    // TokenFactory 实现 方法一
 ```
 
 
