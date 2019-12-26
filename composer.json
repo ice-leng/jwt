@@ -21,10 +21,5 @@
       "name": "lengbin",
       "email": "xykxyk2008@163.com"
     }
-  ],
-  "extra": {
-    "hyperf": {
-      "config": "Lengbin\\Hyperf\\Swagger\\ConfigProvider"
-    }
-  }
+  ]
 }
