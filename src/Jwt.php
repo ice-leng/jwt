@@ -267,7 +267,7 @@ class Jwt extends ObjectHelper implements TokenInterface
         $builder->issuedAt($time)->canOnlyBeUsedAfter($time + $this->nbf)->expiresAt($time + $this->exp);
 
         // 载体
-        foreach ($claims as $name => $value) {
+        foreach ($params as $name => $value) {
             $builder->withClaim($name, $value);
         }
 
