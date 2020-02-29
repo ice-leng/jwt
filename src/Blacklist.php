@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lengbin\Jwt;
 
-use Lengbin\Hyperf\Helper\ObjectHelper;
+use Lengbin\Helper\YiiSoft\ObjectHelper;
 use Psr\SimpleCache\CacheInterface;
 
 class Blacklist extends ObjectHelper

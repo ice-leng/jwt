@@ -12,8 +12,8 @@ use Lcobucci\JWT\Parsing\Encoder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Token;
 use Lcobucci\JWT\ValidationData;
-use Lengbin\Hyperf\Helper\Arrays\ArrayHelper;
-use Lengbin\Hyperf\Helper\ObjectHelper;
+use Lengbin\Helper\YiiSoft\Arrays\ArrayHelper;
+use Lengbin\Helper\YiiSoft\ObjectHelper;
 use Psr\SimpleCache\CacheInterface;
 
 /**
