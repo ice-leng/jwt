@@ -3,7 +3,7 @@
 namespace Lengbin\Jwt;
 
 use EasySwoole\Jwt\Exception;
-use EasySwoole\Jwt\Jwt;
+use EasySwoole\Jwt\Jwt as BaseJwt;
 use EasySwoole\Jwt\JwtObject;
 use Lengbin\Helper\Util\SnowFlakeHelper;
 use Lengbin\Helper\YiiSoft\Arrays\ArrayHelper;
@@ -17,7 +17,7 @@ use Psr\SimpleCache\InvalidArgumentException;
  *
  * @package Lengbin\Jwt
  */
-class Token implements JwtInterface
+class Jwt implements JwtInterface
 {
     protected $config;
     protected $cache;
@@ -35,11 +35,11 @@ class Token implements JwtInterface
     }
 
     /**
-     * @return Jwt
+     * @return BaseJwt
      */
-    protected function getJwt(): Jwt
+    protected function getJwt(): BaseJwt
     {
-        return Jwt::getInstance()->setSecretKey($this->config->key);
+        return BaseJwt::getInstance()->setSecretKey($this->config->key);
     }
 
     /**

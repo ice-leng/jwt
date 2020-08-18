@@ -1,11 +1,12 @@
 Info
 -------
-jwt 刷新token 黑名单
+jwt 带 刷新token
+token 黑名单
 
 Request
 -------
 ```
-"lcobucci/jwt": "^3.3"
+    "easyswoole/jwt": "^1.1"
 ```
 
 Install
@@ -30,50 +31,34 @@ Usage
 -----
 ```php
 
-
 <?php
-    // 方法一
-    $config = [
-        //加密类型, 支持类型请看 supportedAlgs
-        'alg'        => 256,
-        //私钥，可以是字符串也可以是文件路径
-        'privateKey' => '',
-        //公钥，可以是字符串也可以是文件路径
-        'publicKey'  => '',
-        //key,
-        'key'        => 'ice',
-        //发行人
-        'iss'        => '',
-        //接受者
-        'aud'        => '',
-        //在多少秒之前不可使用
-        'nbf'        => 0,
-        //过期时间
-        'exp'        => 7200,
-        // 黑名单缓存类,
-        'cache'      => \Cache::class, // implement Psr\SimpleCache\CacheInterface
-    ];
-    $jwt = new Jwt($config);
-    // make
-    $jwt->makeToken(["a" => '1', "b" => '2'], 1);
-    $exp = 604800;
-    $refreshToken = $jwt->makeRefreshToken($exp);
+    use Lengbin\Jwt\Config;
+    use Lengbin\Jwt\Jwt;
+    /**
+     *
+     * @var $cache Psr\SimpleCache\CacheInterface
+     */
+    $cache = new Cache();
     
-    // validate
-    $token = '';
-    $jwt->verify($token);
-     // get params
-    $jwt->getParams();
+    // 具体配置 情况 config 文件
+    // 支持 单点登录
+    $config = new Config();
+    $jwt = new Jwt($cache, $config);
+    
+    // 生成token
+    $token = $jwt->generate(['id'=>1, 'test'=>1]);
+    
+    // 生成刷新token
+    $refreshToken = $jwt->generateRefreshToken($token);
 
-     // refreshToken
-    $jwt->refreshToken($refreshToken);
-
-    $jwt->logout();
-
-    // 方法二  依赖注入
-    //自己去实现
-    // TokenInterface => TokenFactory
-    // TokenFactory 实现 方法一
+    // 验证 token 获得 数据
+    $data = $jwt->verifyToken($token);
+  
+    // 通过刷新token 更新 token
+    $refreshToken2 = $jwt->refreshToken($refreshToken);
+   
+    // 注销
+    $jwt->logout($token);
 ```
 
 
