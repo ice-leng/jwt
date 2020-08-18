@@ -28,7 +28,7 @@ class Config extends ObjectHelper
      * 刷新token 时间
      * @var float|int
      */
-    public $ttl = 24 * 3600 * 15;
+    public $ttl = 24 * 3600 * 30;
 
     /**
      * 单点登录
