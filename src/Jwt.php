@@ -119,14 +119,6 @@ class Jwt implements JwtInterface
                 throw new ExpiredJwtException('Expired Token');
             }
 
-            // 单点登录
-            if ($this->config->sso) {
-                $ssoToken = $this->cache->get($jwtObject->getJti());
-                if ($ssoToken !== $token) {
-                    throw new InvalidJwtException('Invalid Token');
-                }
-            }
-
             return $jwtObject;
         } catch (Exception $e) {
             throw new InvalidJwtException($e->getMessage());
