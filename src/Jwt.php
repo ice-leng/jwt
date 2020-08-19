@@ -156,7 +156,7 @@ class Jwt implements JwtInterface
      * @param string $refreshToken
      *
      * @return string
-     * @throws InvalidArgumentException|InvalidJwtException
+     * @throws InvalidArgumentException|InvalidJwtException|ExpiredJwtException
      */
     public function refreshToken(string $refreshToken): string
     {
