@@ -35,4 +35,12 @@ class Config extends ObjectHelper
      * @var bool
      */
     public $sso = false;
+
+    /**
+     * 如果开启 单点登录，请设置 key
+     *
+     * @var string
+     */
+    public $ssoKey = 'id';
+
 }

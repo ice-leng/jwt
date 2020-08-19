@@ -48,19 +48,31 @@ class Jwt implements JwtInterface
      * @param array $data
      *
      * @return string
-     *
+     * @throws ExpiredJwtException
      * @throws InvalidArgumentException
+     * @throws InvalidJwtException
      */
     public function generate(array $data): string
     {
-        $time = time();
+        $id = $time = time();
         $json = json_encode($data);
-        $id = $this->config->sso ? ArrayHelper::getValue($data, 'id', $json) : $time;
+        if ($this->config->sso) {
+            if (empty($this->config->ssoKey)) {
+                throw new InvalidJwtException('Invalid SsoKey');
+            }
+            $id = ArrayHelper::getValue($data, $this->config->ssoKey);
+            if (empty($id)) {
+                throw new InvalidJwtException('Invalid Sso Value');
+            }
+        }
         $jti = md5($id);
         $jwtObject = $this->getJwt()->publish();
         $jwtObject->setAlg($this->config->alg)->setExp(($time + $this->config->exp))->setIat($time)->setJti($jti)->setData($json);
         $token = $jwtObject->__toString();
         if ($this->config->sso) {
+            if ($this->cache->has($jti)) {
+                $this->logout($this->cache->get($jti));
+            }
             $this->cache->set($jti, $token, $this->config->exp);
         }
         return $token;
