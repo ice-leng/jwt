@@ -190,7 +190,7 @@ class Jwt implements JwtInterface
         if (!empty($refreshToken)) {
             $delete[] = $refreshToken;
         }
-        $this->cache->delete(...$delete);
+        $this->cache->deleteMultiple($delete);
         return true;
     }
 
