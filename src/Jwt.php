@@ -143,6 +143,7 @@ class Jwt implements JwtInterface
         // 如果没有刷新token 表示 logout
         $result = $this->cache->get($refreshToken);
         if (empty($result)) {
+            $this->cache->delete($token);
             throw new InvalidJwtException('Invalid Token');
         }
 
