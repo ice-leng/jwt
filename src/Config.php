@@ -2,9 +2,9 @@
 
 namespace Lengbin\Jwt;
 
-use Lengbin\Helper\YiiSoft\ObjectHelper;
+use Lengbin\Helper\Component\BaseObject;
 
-class Config extends ObjectHelper
+class Config extends BaseObject
 {
     /**
      * 加密方式
