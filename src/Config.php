@@ -2,7 +2,7 @@
 
 namespace Lengbin\Jwt;
 
-use Lengbin\Helper\Component\BaseObject;
+use Lengbin\Common\Component\BaseObject;
 
 class Config extends BaseObject
 {
