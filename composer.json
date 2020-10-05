@@ -9,7 +9,7 @@
     "easyswoole/component": "^2.0",
     "easyswoole/jwt": "^1.1",
     "psr/simple-cache": "^1.0",
-    "lengbin/helper": "dev-master",
+    "lengbin/helper": "^1.0",
     "ext-json": "*"
   },
   "minimum-stability": "stable",
