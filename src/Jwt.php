@@ -42,17 +42,7 @@ class Jwt implements JwtInterface
         return BaseJwt::getInstance()->setSecretKey($this->config->key);
     }
 
-    /**
-     * 生成token
-     *
-     * @param array $data
-     *
-     * @return string
-     * @throws ExpiredJwtException
-     * @throws InvalidArgumentException
-     * @throws InvalidJwtException
-     */
-    public function generate(array $data): string
+    protected function generateToken(array $data): array
     {
         $id = $time = time();
         $json = json_encode($data);
@@ -68,7 +58,22 @@ class Jwt implements JwtInterface
         $jti = md5($id);
         $jwtObject = $this->getJwt()->publish();
         $jwtObject->setAlg($this->config->alg)->setExp(($time + $this->config->exp))->setIat($time)->setJti($jti)->setData($json);
-        $token = $jwtObject->__toString();
+        return [$jti, $jwtObject->__toString()];
+    }
+
+    /**
+     * 生成token
+     *
+     * @param array $data
+     *
+     * @return string
+     * @throws ExpiredJwtException
+     * @throws InvalidArgumentException
+     * @throws InvalidJwtException
+     */
+    public function generate(array $data): string
+    {
+        [$jti, $token] = $this->generateToken($data);
         if ($this->config->sso) {
             if ($this->cache->has($jti)) {
                 $this->logout($this->cache->get($jti));
@@ -168,7 +173,13 @@ class Jwt implements JwtInterface
         if (empty($data)) {
             throw new InvalidJwtException('Invalid Token Data');
         }
-        $token = $this->generate($data);
+        [$jti, $token] = $this->generateToken($data);
+        if ($this->config->sso) {
+            if ($this->cache->has($jti)) {
+                $this->cache->delete($this->cache->get($jti));
+            }
+            $this->cache->set($jti, $token, $this->config->exp);
+        }
         // token 与  刷新token 关联
         $this->cache->set($token, $refreshToken, $this->config->exp);
         return $token;
